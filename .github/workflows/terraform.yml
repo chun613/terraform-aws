@@ -1,20 +1,8 @@
-name: 'Terraform'
-
-on:
-  pull_request:
-    branches: 
-      - main
-    paths: 
-      - "bastion/**"
-  workflow_dispatch:
-
-defaults:
-  run:
-    working-directory: bastion
+name: 'Kubernetes Terraform'
 
 jobs:
-  terraform:
-    name: 'bastion'
+  terraform-plan:
+    name: 'kubernetes'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -1,0 +1,19 @@
+name: 'Bastion Terraform'
+
+on:
+  pull_request:
+    branches: 
+      - main
+    paths: 
+      - "bastion/**"
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: bastion
+
+jobs:
+  bastion-plan:
+    name: 'bastion'
+    runs-on: ubuntu-latest
+    needs: terraform-plan
