@@ -19,7 +19,7 @@ provider "aws" {
   secret_key = "kpbppClQgxZS+x4esj/MeevselZEYSfQPhjFlPqv"
 }
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ubuntuu" {
   most_recent = true
 
   filter {
