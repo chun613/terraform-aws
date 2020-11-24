@@ -12,30 +12,27 @@ jobs:
   terraform:
     name: 'bastion'
     runs-on: ubuntu-latest
-    env: 
-      working-dir: ./bastion
+    defaults:
+      run:
+        working-directory: bastion
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        working-directory: ${{env.working-dir}}
         with:
           terraform_version: 0.13.5
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Format
         id: fmt
-        working-directory: ${{env.working-dir}}
         run: terraform fmt -check
       - name: Terraform Plan
         id: plan
-        working-directory: ${{env.working-dir}}
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color
         continue-on-error: true
       - name: Update Pull Request
         uses: actions/github-script@0.9.0
-        working-directory: ${{env.working-dir}}
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
@@ -49,6 +46,5 @@ jobs:
               body: ${process.env.PLAN}
             })
       - name: Terraform Plan Status
-        working-directory: ${{env.working-dir}}
         if: steps.plan.outcome == 'failure'
         run: exit 1
