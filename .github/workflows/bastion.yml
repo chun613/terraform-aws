@@ -4,6 +4,8 @@ on:
   push:
     branches: 
       - main
+    paths: 
+      - "bastion/**"
   pull_request:
     branches: 
       - main
@@ -61,7 +63,7 @@ jobs:
               body: output
             })
       - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
+        if: steps.plan.outcome == 'failure' && github.event_name == 'pull_request'
         run: exit 1
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
