@@ -48,7 +48,7 @@ jobs:
               repo: context.repo.repo,
               body: ${process.env.PLAN}
             })
-        - name: Terraform Plan Status
-          working-directory: ${{env.working-dir}}
-          if: steps.plan.outcome == 'failure'
-          run: exit 1
+      - name: Terraform Plan Status
+        working-directory: ${{env.working-dir}}
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
