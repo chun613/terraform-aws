@@ -1,20 +1,21 @@
-name: 'Terraform'
+name: 'Kubernetes Terraform'
 
 on:
   pull_request:
     branches: 
       - main
-    path: 
-      - "bastion/**"
+    paths: 
+      - "kubernetes/**"
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: kubernetes
+
 jobs:
-  terraform:
-    name: 'bastion'
+  kubernetes-plan:
+    name: 'kubernetes'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: bastion
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -59,3 +60,6 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: terraform apply -auto-approve
