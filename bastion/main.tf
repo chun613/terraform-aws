@@ -14,7 +14,7 @@ terraform {
 }
 
 provider "aws" {
-  region     = "ap-southeast-1"
+  region = "ap-southeast-1"
 }
 
 data "aws_ami" "ubuntu" {
