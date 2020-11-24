@@ -5,16 +5,16 @@ on:
     branches: 
       - main
     path: 
-      - "bastion/**"
+      - "kubernetes/**"
   workflow_dispatch:
 
 defaults:
   run:
-    working-directory: bastion
+    working-directory: kubernetes
 
 jobs:
   terraform:
-    name: 'bastion'
+    name: 'kubernetes'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
